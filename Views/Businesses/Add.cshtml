@@ -1,6 +1,7 @@
+@model AspnetCoreMvcFull.Models.UserDto
 @{
     ViewData["Title"] = "Add Business - Set Up";
-    var alertMessage = TempData.Peek("Alert") as string;
+    var alertMessage = ViewBag.Message;// TempData.Peek("Alert") as string;
 }
 
 @section VendorStyles {
@@ -71,35 +72,36 @@
                     <form id="formAuthentication" class="mb-6" asp-action="Add" method="POST">
                         <div class="mb-6">
                             <label class="form-label" for="BusinessName">BusinessName</label>
-                            <input type="text" class="form-control" id="BusinessName" placeholder="Enter BusinessName" name="BusinessName" aria-label="Enter BusinessName" required>
+                            <input asp-for="BusinessName" type="text" class="form-control" id="BusinessName" placeholder="Enter BusinessName" name="BusinessName" aria-label="Enter BusinessName" required>
+                            <span asp-validation-for="BusinessName" class="text-danger"></span>
                         </div>
                         <div class="mb-6">
                             <label class="form-label" for="Town">Town</label>
-                            <input type="text" class="form-control" id="Town" placeholder="Enter Town" name="Town" aria-label="Enter Town" required>
+                            <input asp-for="Town" type="text" class="form-control" id="Town" placeholder="Enter Town" name="Town" aria-label="Enter Town" required>
                         </div>
                         <hr/>
                         <div class="mb-6">
                             <label class="form-label" for="FirstName">FirstName</label>
-                            <input type="text" class="form-control" id="FirstName" placeholder="Enter Firstname" name="FirstName" aria-label="Enter Firstname" required>
+                            <input asp-for="FirstName" type="text" class="form-control" id="FirstName" placeholder="Enter Firstname" name="FirstName" aria-label="Enter Firstname" required>
                         </div>
                         <div class="mb-6">
                             <label class="form-label" for="LastName">LastName</label>
-                            <input type="text" class="form-control" id="LastName" placeholder="Enter LastName" name="LastName" aria-label="Enter LastName" required>
+                            <input asp-for="LastName" type="text" class="form-control" id="LastName" placeholder="Enter LastName" name="LastName" aria-label="Enter LastName" required>
                         </div>
                         <div class="row mb-6">
                             <div class="col">
                                 <label class="form-label" for="IdNumber">ID Number</label>
-                                <input type="number" class="form-control" id="IdNumber" placeholder="ID Number" name="IdNumber" aria-label="Enter ID Number" required>
+                                <input asp-for="IdNumber" type="number" class="form-control" id="IdNumber" placeholder="ID Number" name="IdNumber" aria-label="Enter ID Number" required>
                             </div>
                             <div class="col">
                                 <label class="form-label" for="Phone">Phone</label>
-                                <input type="text" class="form-control" id="Phone" placeholder="077X-123456" name="Phone" aria-label="Enter Phone" required>
+                                <input asp-for="Phone" type="text" class="form-control" id="Phone" placeholder="077X-123456" name="Phone" aria-label="Enter Phone" required>
                             </div>
                         </div>
                         <!-- Description -->
                         <div class="mb-6">
                             <label class="form-label" for="Email">Email</label>
-                            <input type="text" class="form-control" id="Email" placeholder="Enter Email" name="Email" aria-label="Enter Email" required>
+                            <input asp-for="Email" type="text" class="form-control" id="Email" placeholder="Enter Email" name="Email" aria-label="Enter Email" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit Business</button>
 

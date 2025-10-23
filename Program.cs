@@ -88,7 +88,7 @@ app.MapControllerRoute(
 // Route 2: Custom route
 app.MapControllerRoute(
     name: "login",
-    pattern: "{controller=Auth}/{action=LoginCover}/{id?}");
+    pattern: "{controller=Auth}/{action=LoginAccount}/{id?}");
 
 // Route 3: API route
 app.MapControllerRoute(

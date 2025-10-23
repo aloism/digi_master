@@ -23,6 +23,7 @@ $(function () {
     select2 = $('.select2'),
     userView = '/Users/ViewAccount',
     statusObj = {
+      0: { title: 'Pending', class: 'bg-label-warning' },
       1: { title: 'Pending', class: 'bg-label-warning' },
       2: { title: 'Active', class: 'bg-label-success' },
       3: { title: 'Inactive', class: 'bg-label-secondary' }
@@ -43,17 +44,17 @@ $(function () {
       processing: true,
       serverSide: true,
       ajax: {
-        url: '/Accounts/AccsAjaxRequest',
+        url: '/Businesses/BusAjaxRequest',
         type: 'POST'
       },
       columns: [
         // columns according to JSON
         { data: 'id' },
         { data: 'id' },
-        { data: 'full_name' },
-        { data: 'role' },
-        { data: 'current_plan' },
-        { data: 'billing' },
+        { data: 'businessName' },
+        { data: 'clientCode' },
+        { data: 'clientCode' },
+        { data: 'email' },
         { data: 'status' },
         { data: 'action' }
       ],
@@ -86,9 +87,9 @@ $(function () {
           targets: 2,
           responsivePriority: 4,
           render: function (data, type, full, meta) {
-            console.log(meta);
-            console.log(full);
-            var $name = full['full_name'],
+           // console.log(meta);
+            //console.log(full);
+            var $name = full['firstName'],
               $email = full['email'],
               $image = full['avatar'];
             if ($image) {
@@ -100,7 +101,7 @@ $(function () {
               var stateNum = Math.floor(Math.random() * 6);
               var states = ['success', 'danger', 'warning', 'info', 'dark', 'primary', 'secondary'];
               var $state = states[stateNum],
-                $name = full['full_name'],
+                $name = full['firstName'],
                 $initials = $name.match(/\b\w/g) || [];
               $initials = (($initials.shift() || '') + ($initials.pop() || '')).toUpperCase();
               $output = '<span class="avatar-initial rounded-circle bg-label-' + $state + '">' + $initials + '</span>';
@@ -131,8 +132,10 @@ $(function () {
           // User Role
           targets: 3,
           render: function (data, type, full, meta) {
-            var $role = full['role'];
+            var $role = 'Owner';
+            var $businessName = full['businessName'];
             var roleBadgeObj = {
+              Owner: '<i class="bx bx-crown text-primary me-2"></i>',
               Subscriber: '<i class="bx bx-crown text-primary me-2"></i>',
               Author: '<i class="bx bx-edit text-warning me-2"></i>',
               Maintainer: '<i class="bx bx-user text-success me-2"></i>',
@@ -142,7 +145,7 @@ $(function () {
             return (
               "<span class='text-truncate d-flex align-items-center text-heading'>" +
               roleBadgeObj[$role] +
-              $role +
+              $businessName +
               '</span>'
             );
           }
@@ -151,7 +154,7 @@ $(function () {
           // Plans
           targets: 4,
           render: function (data, type, full, meta) {
-            var $plan = full['current_plan'];
+            var $plan = full['clientCode'];
 
             return '<span class="text-heading">' + $plan + '</span>';
           }
@@ -370,7 +373,7 @@ $(function () {
           display: $.fn.dataTable.Responsive.display.modal({
             header: function (row) {
               var data = row.data();
-              return 'Details of ' + data['full_name'];
+              return 'Details of ' + data['firstName'];
             }
           }),
           type: 'column',
@@ -399,49 +402,49 @@ $(function () {
       },
       initComplete: function () {
         // Adding role filter once table initialized
-        this.api()
-          .columns(3)
-          .every(function () {
-            var column = this;
-            var select = $(
-              '<select id="UserRole" class="form-select text-capitalize"><option value=""> Select Role </option></select>'
-            )
-              .appendTo('.user_role')
-              .on('change', function () {
-                var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                column.search(val ? '^' + val + '$' : '', true, false).draw();
-              });
+        //this.api()
+        //  .columns(3)
+        //  .every(function () {
+        //    var column = this;
+        //    var select = $(
+        //      '<select id="UserRole" class="form-select text-capitalize"><option value=""> Select Role </option></select>'
+        //    )
+        //      .appendTo('.user_role')
+        //      .on('change', function () {
+        //        var val = $.fn.dataTable.util.escapeRegex($(this).val());
+        //        column.search(val ? '^' + val + '$' : '', true, false).draw();
+        //      });
 
-            column
-              .data()
-              .unique()
-              .sort()
-              .each(function (d, j) {
-                select.append('<option value="' + d + '">' + d + '</option>');
-              });
-          });
+        //    column
+        //      .data()
+        //      .unique()
+        //      .sort()
+        //      .each(function (d, j) {
+        //        select.append('<option value="' + d + '">' + d + '</option>');
+        //      });
+        //  });
         // Adding plan filter once table initialized
-        this.api()
-          .columns(4)
-          .every(function () {
-            var column = this;
-            var select = $(
-              '<select id="UserPlan" class="form-select text-capitalize"><option value=""> Select Plan </option></select>'
-            )
-              .appendTo('.user_plan')
-              .on('change', function () {
-                var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                column.search(val ? '^' + val + '$' : '', true, false).draw();
-              });
+        //this.api()
+        //  .columns(4)
+        //  .every(function () {
+        //    var column = this;
+        //    var select = $(
+        //      '<select id="UserPlan" class="form-select text-capitalize"><option value=""> Select Plan </option></select>'
+        //    )
+        //      .appendTo('.user_plan')
+        //      .on('change', function () {
+        //        var val = $.fn.dataTable.util.escapeRegex($(this).val());
+        //        column.search(val ? '^' + val + '$' : '', true, false).draw();
+        //      });
 
-            column
-              .data()
-              .unique()
-              .sort()
-              .each(function (d, j) {
-                select.append('<option value="' + d + '">' + d + '</option>');
-              });
-          });
+        //    column
+        //      .data()
+        //      .unique()
+        //      .sort()
+        //      .each(function (d, j) {
+        //        select.append('<option value="' + d + '">' + d + '</option>');
+        //      });
+        //  });
         // Adding status filter once table initialized
         this.api()
           .columns(6)
@@ -492,7 +495,7 @@ $(function () {
 // Validation & Phone mask
 (function () {
   const phoneMaskList = document.querySelectorAll('.phone-mask'),
-    addNewUserForm = document.getElementById('addNewUserForm');
+    addNewBusinessForm = document.getElementById('addNewBusinessForm');
 
   // Phone Number
   if (phoneMaskList) {
@@ -504,16 +507,16 @@ $(function () {
     });
   }
   // Add New User Form Validation
-  const fv = FormValidation.formValidation(addNewUserForm, {
+  const fv = FormValidation.formValidation(addNewBusinessForm, {
     fields: {
-      userFullname: {
+      BusinessName: {
         validators: {
           notEmpty: {
-            message: 'Please enter fullname '
+            message: 'Please enter Business name '
           }
         }
       },
-      userEmail: {
+      Email: {
         validators: {
           notEmpty: {
             message: 'Please enter your email'

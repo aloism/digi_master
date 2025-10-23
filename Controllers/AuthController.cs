@@ -40,7 +40,7 @@ public class AuthController : Controller
   public IActionResult ForgotPasswordBasic() => View();
   public IActionResult ForgotPasswordCover() => View();
   public IActionResult LoginBasic() => View();
-  public async Task<IActionResult> LoginCoverAsync() {
+  public async Task<IActionResult> LoginAccountAsync() {
     // DbServices _adminService = new DbServices(_appDbContext);
     // int newAdminId = await _adminService.CreateAdminAsync();
 
@@ -119,7 +119,7 @@ public class AuthController : Controller
   public IActionResult VerifyEmailCover() => View();
 
   [HttpPost]
-  public async Task<IActionResult> LoginCover(LoginViewModel model)
+  public async Task<IActionResult> LoginAccount(LoginViewModel model)
   {
     if (!ModelState.IsValid)
       return View(model);

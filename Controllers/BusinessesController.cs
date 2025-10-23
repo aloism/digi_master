@@ -5,6 +5,7 @@ using AspnetCoreMvcFull.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
+using System.Data.Entity;
 
 namespace AspnetCoreMvcFull.Controllers
 {
@@ -28,6 +29,13 @@ namespace AspnetCoreMvcFull.Controllers
     }
     public IActionResult List()
     {
+      ViewBag.Businesses = _appDbContext.Users.Count();
+      int activeUserCount = _appDbContext.Users.Count(u => u.Status == 1);
+      ViewBag.ActiveBusinesses = activeUserCount;
+      int pendingUserCount = _appDbContext.Users.Count(u => u.Status == 0);
+      ViewBag.PendingBusinesses = pendingUserCount;
+      int inactiveUserCount = _appDbContext.Users.Count(u => u.Status == 2);
+      ViewBag.InactiveBusinesses = inactiveUserCount;
       return View();
     }
     public IActionResult Add()
@@ -36,7 +44,7 @@ namespace AspnetCoreMvcFull.Controllers
     }
 
     [HttpPost]
-    public IActionResult BisAjaxRequest()
+    public IActionResult BusAjaxRequest()
     {
 
       try
@@ -45,14 +53,14 @@ namespace AspnetCoreMvcFull.Controllers
 
         if (string.IsNullOrEmpty(userName) || !AccountAuthentication.instance().isAccountLoggedIn(DashboardsController.getLoggedInState()))
         {
-          return Json(new { });
+          //return Json(new { });
         }
 
         List<User> records = (from account in this._appDbContext.Users.Take(1000)
                                         select account).ToList();
 
-        _logger.LogInformation("AccsAjaxRequest action called.");
-        _logger.LogInformation(string.Format("AccsAjaxRequest records {0}.", records.Count()));
+        _logger.LogInformation("BusAjaxRequest action called.");
+        _logger.LogInformation(string.Format("BusAjaxRequest records {0}.", records.Count()));
         var resJson = new
         {
           data = records//JsonSerializer.Serialize(records),
@@ -70,6 +78,7 @@ namespace AspnetCoreMvcFull.Controllers
     [HttpPost]
     public async Task<IActionResult> Add(UserDto request)
     {
+     // TempData["Alert"] = "";
       var settings = await _appDbContext.Settings.FirstOrDefaultAsync();
 
       // Validation
@@ -98,17 +107,19 @@ namespace AspnetCoreMvcFull.Controllers
       }
       else
       {
-        TempData["Alert"] = "Mobile Number should start with a Zero";
+        ViewBag.Message = "Mobile Number should start with a Zero";
         return View(request);
      //   return BadRequest("Mobile Number should start with a Zero");
       }
 
       // Check for duplicate email
       var existingUser = await _appDbContext.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
+      //var existingUser = await _appDbContext.Users.FirstOrDefaultAsync(u => u.Email != null && u.Email == request.Email);
+
       if (existingUser != null)
       {
-      //  return BadRequest("Duplicate Account Found");
-        TempData["Alert"] = "Duplicate Account Found";
+        //  return BadRequest("Duplicate Account Found");
+        ViewBag.Message = "Duplicate Account Found";
         return View(request);
       }
 
