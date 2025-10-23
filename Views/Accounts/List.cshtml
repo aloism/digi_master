@@ -1,0 +1,99 @@
+@{
+    ViewData["Title"] = "User List - Pages";
+}
+
+@section VendorStyles {
+    <link rel="stylesheet" href="~/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
+    <link rel="stylesheet" href="~/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
+    <link rel="stylesheet" href="~/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css">
+    <link rel="stylesheet" href="~/vendor/libs/select2/select2.css" />
+    <link rel="stylesheet" href="~/vendor/libs/&#64;form-validation/form-validation.css" />
+}
+
+@section VendorScripts {
+    <script src="~/vendor/libs/moment/moment.js"></script>
+    <script src="~/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+    <script src="~/vendor/libs/select2/select2.js"></script>
+    <script src="~/vendor/libs/&#64;form-validation/popular.js"></script>
+    <script src="~/vendor/libs/&#64;form-validation/bootstrap5.js"></script>
+    <script src="~/vendor/libs/&#64;form-validation/auto-focus.js"></script>
+    <script src="~/vendor/libs/cleavejs/cleave.js"></script>
+    <script src="~/vendor/libs/cleavejs/cleave-phone.js"></script>
+}
+
+@section PageScripts {
+    <script src="~/js/app-accounts-list.js"></script>
+}
+
+@* ************** Content ************** *@
+
+<!-- Users List Table -->
+<div class="card">
+    <div class="card-header border-bottom">
+        <h5 class="card-title mb-0">Search Filters</h5>
+        <div class="d-flex justify-content-between align-items-center row pt-4 gap-4 gap-md-0 g-6">
+            <div class="col-md-4 user_status"></div>
+        </div>
+    </div>
+    <div class="card-datatable table-responsive">
+        <table class="datatables-users table border-top">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>User</th>
+                    <th>Role</th>
+                    <th>Plan</th>
+                    <th>Billing</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <!-- Offcanvas to add new user -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddUser" aria-labelledby="offcanvasAddUserLabel">
+        <div class="offcanvas-header border-bottom">
+            <h5 id="offcanvasAddUserLabel" class="offcanvas-title">Add Account</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+            <form class="add-new-user pt-0" id="addNewAccountForm" onsubmit="return false">
+
+                <div class="mb-6">
+                    <label class="form-label" for="country">Account Type</label>
+                    <select id="country" class="select2 form-select">
+                        <option value="">Select</option>
+                        <option value="0">Control Account</option>
+                        <option value="1">Commission Account</option>
+                        <option value="2">General Account</option>
+                    </select>
+                </div>
+                <div class="mb-6">
+                    <label class="form-label" for="currency">Currency</label>
+                    <select id="currency" class="select2 form-select">
+                        <option value="">Select</option>
+                        <option value="$">USD</option>
+                        <option value="R">Rands</option>
+                        <option value="ZWG">ZWG</option>
+                    </select>
+                </div>
+
+                <div class="mb-6">
+                    <label class="form-label" for="AccountName">Account Name</label>
+                    <input type="text" class="form-control" id="AccountName" placeholder="Enter AccountName" name="AccountName" aria-label="Enter AccountName" required>
+                </div>
+                <hr />
+
+                <!-- Description -->
+
+                <div class="mb-6">
+                    <label class="form-label" for="Descriptipon">Descriptipon</label>
+                    <input type="text" class="form-control" id="Descriptipon" placeholder="Enter Descriptipon" name="Descriptipon" aria-label="Enter Descriptipon" required>
+                </div>
+                <button type="submit" class="btn btn-primary me-3 data-submit">Submit</button>
+                <button type="reset" class="btn btn-label-danger" data-bs-dismiss="offcanvas">Cancel</button>
+            </form>
+        </div>
+    </div>
+</div>

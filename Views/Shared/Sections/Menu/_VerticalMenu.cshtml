@@ -1,0 +1,278 @@
+@{
+  TempData.Keep();
+  string? currentPage = ViewContext.HttpContext.Request.Path;
+}
+
+<!-- Menu -->
+@* ! Do this simple *@
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+
+  @* ! Hide app brand if navbar-full *@
+  <div
+    class='app-brand demo @((@ViewData["navbarFull"] != null && Convert.ToBoolean(@ViewData["navbarFull"])) ? "d-xl-none" : "")'>
+    <a asp-controller="Dashboards" asp-action="Index" class="app-brand-link">
+      <span class="app-brand-logo demo">
+        @await Html.PartialAsync("../_Partials/_Macros")
+      </span>
+      <span class="app-brand-text demo menu-text fw-bold ms-2">@TempData.Peek("appName")</span>
+    </a>
+
+    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+      <i class="bx bx-chevron-left bx-sm d-flex align-items-center justify-content-center"></i>
+    </a>
+  </div>
+
+  <div class="menu-inner-shadow"></div>
+
+  @* ! Full version menu-items *@
+  <ul class="menu-inner py-1">
+    <!-- Dashboards -->
+    <li class='menu-item@(currentPage.EndsWith("/") || currentPage.StartsWith("/Dashboards/") ? " active open" : "")'>
+            <a asp-controller="Dashboards" asp-action="Index" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                <div class="text-truncate" data-i18n="Dashboards">Dashboards</div>
+            </a>
+   @*    <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-home-smile"></i>
+        <div class="text-truncate" data-i18n="Dashboards">Dashboards</div>
+        <span class="badge rounded-pill bg-danger ms-auto">5</span>
+      </a>
+      <ul class="menu-sub">
+        <li class='menu-item@(currentPage == "/" ? " active" : "")'>
+          <a asp-controller="Dashboards" asp-action="Index" class="menu-link">
+            <div class="text-truncate" data-i18n="Analytics">Analytics</div>
+          </a>
+        </li>
+        <li class='menu-item@(currentPage == "/Dashboards/CRM" ? " active" : "")'>
+          <a asp-controller="Dashboards" asp-action="CRM" class="menu-link">
+            <div class="text-truncate" data-i18n="CRM">CRM</div>
+          </a>
+        </li>
+        <li class='menu-item@(currentPage == "/Ecommerce/Dashboard" ? " active" : "")'>
+          <a asp-controller="Ecommerce" asp-action="Dashboard" class="menu-link">
+            <div class="text-truncate" data-i18n="eCommerce">eCommerce</div>
+          </a>
+        </li>
+        <li class='menu-item@(currentPage == "/Logistics/Dashboard" ? " active" : "")'>
+          <a asp-controller="Logistics" asp-action="Dashboard" class="menu-link">
+            <div class="text-truncate" data-i18n="Logistics">Logistics</div>
+          </a>
+        </li>
+        <li class='menu-item@(currentPage == "/Academy/Dashboard" ? " active" : "")'>
+          <a asp-controller="Academy" asp-action="Dashboard" class="menu-link">
+            <div class="text-truncate" data-i18n="Academy">Academy</div>
+          </a>
+        </li>
+      </ul>
+ *@
+    </li>
+
+    <!-- Front Pages -->
+
+        <li class='menu-item@(currentPage.StartsWith("/Branches") ? " active open" : "")'>
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-store"></i>
+                <div class="text-truncate" data-i18n="Branches">Branches</div>
+            </a>
+            <ul class="menu-sub">
+                <li class='menu-item@(currentPage == "/Branches/List" ? " active" : "")'>
+                    <a asp-controller="Branches" asp-action="List" class="menu-link">
+                        <div class="text-truncate" data-i18n="List">List</div>
+                    </a>
+                </li>
+                <li class='menu-item@(currentPage == "/Branches/Add" ? " active" : "")'>
+                    <a asp-controller="Branches" asp-action="Add" class="menu-link">
+                        <div class="text-truncate" data-i18n="Add">Add</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class='menu-item@(currentPage.StartsWith("/Tellers") ? " active open" : "")'>
+      <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-group"></i>
+                <div class="text-truncate" data-i18n="Tellers">Tellers</div>
+      </a>
+      <ul class="menu-sub">
+                <li class='menu-item@(currentPage == "/Tellers/List" ? " active" : "")'>
+                    <a asp-controller="Tellers" asp-action="List" class="menu-link" target="_blank">
+                        <div class="text-truncate" data-i18n="List">List</div>
+          </a>
+        </li>
+                <li class='menu-item@(currentPage == "/Tellers/Add" ? " active" : "")'>
+                    <a asp-controller="Tellers" asp-action="Add" class="menu-link" target="_blank">
+                        <div class="text-truncate" data-i18n="Add">Add</div>
+          </a>
+        </li>
+                <li class='menu-item@(currentPage == "/Tellers/CashBooks" ? " active" : "")'>
+                    <a asp-controller="Tellers" asp-action="CashBooks" class="menu-link" target="_blank">
+                        <div class="text-truncate" data-i18n="CashBooks">CashBooks</div>
+          </a>
+        </li>
+        @* <li class='menu-item@(currentPage == "/FrontPages/CheckoutPage" ? " active" : "")'>
+          <a asp-controller="FrontPages" asp-action="CheckoutPage" class="menu-link" target="_blank">
+            <div class="text-truncate" data-i18n="Checkout">Checkout</div>
+          </a>
+        </li>
+        <li class='menu-item@(currentPage == "/FrontPages/HelpCenterLanding" ? " active" : "")'>
+          <a asp-controller="FrontPages" asp-action="HelpCenterLanding" class="menu-link" target="_blank">
+            <div class="text-truncate" data-i18n="Help Center">Help Center</div>
+          </a>
+        </li> *@
+      </ul>
+    </li>
+
+    <li class='menu-item@(currentPage.StartsWith("/Transactions") ? " active" : "")'>
+      <a asp-controller="Transactions" asp-action="Index" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-data"></i>
+        <div class="text-truncate" data-i18n="Transactions">Transactions</div>
+      </a>
+    </li>
+        <!-- Admin -->
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text" data-i18n="Admin">Admin</span>
+        </li>
+
+        <li class='menu-item@(currentPage.StartsWith("/Businesses") ? " active open" : "")'>
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-building"></i>
+                <div class="text-truncate" data-i18n="Businesses">Businesses</div>
+            </a>
+            <ul class="menu-sub">
+                <li class='menu-item@(currentPage == "/Businesses/List" ? " active" : "")'>
+                    <a asp-controller="Businesses" asp-action="List" class="menu-link">
+                        <div class="text-truncate" data-i18n="List">List</div>
+                    </a>
+                </li>
+            </ul>
+            <ul class="menu-sub">
+                <li class='menu-item@(currentPage == "/Businesses/Add" ? " active" : "")'>
+                    <a asp-controller="Businesses" asp-action="Add" class="menu-link">
+                        <div class="text-truncate" data-i18n="Add">Add</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class='menu-item@(currentPage.StartsWith("/Accounts") ? " active open" : "")'>
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-receipt"></i>
+                <div class="text-truncate" data-i18n="Accounts">Accounts</div>
+            </a>
+            <ul class="menu-sub">
+                <li class='menu-item@(currentPage == "/Accounts/List" ? " active" : "")'>
+                    <a asp-controller="Accounts" asp-action="List" class="menu-link">
+                        <div class="text-truncate" data-i18n="List">List</div>
+                    </a>
+                </li>
+            </ul>
+            <ul class="menu-sub">
+                <li class='menu-item@(currentPage == "/Accounts/History" ? " active" : "")'>
+                    <a asp-controller="Accounts" asp-action="History" class="menu-link">
+                        <div class="text-truncate" data-i18n="History">History</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class='menu-item@(currentPage.StartsWith("/Users") ? " active open" : "")'>
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div class="text-truncate" data-i18n="Users">Users</div>
+            </a>
+            <ul class="menu-sub">
+                <li class='menu-item@(currentPage == "/Users/List" ? " active" : "")'>
+                    <a asp-controller="Users" asp-action="List" class="menu-link">
+                        <div class="text-truncate" data-i18n="List">List</div>
+                    </a>
+                </li>
+                <li class='menu-item@(currentPage.StartsWith("/Users/View") ? " active open" : "")'>
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <div class="text-truncate" data-i18n="View">View</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class='menu-item@(currentPage == "/Users/ViewAccount" ? " active" : "")'>
+                            <a asp-controller="Users" asp-action="ViewAccount" class="menu-link">
+                                <div class="text-truncate" data-i18n="Account">Account</div>
+                            </a>
+                        </li>
+                        <li class='menu-item@(currentPage == "/Users/ViewSecurity" ? " active" : "")'>
+                            <a asp-controller="Users" asp-action="ViewSecurity" class="menu-link">
+                                <div class="text-truncate" data-i18n="Security">Security</div>
+                            </a>
+                        </li>
+                        <li class='menu-item@(currentPage == "/Users/ViewBilling" ? " active" : "")'>
+                            <a asp-controller="Users" asp-action="ViewBilling" class="menu-link">
+                                <div class="text-truncate" data-i18n="Billing & Plans">Billing & Plans</div>
+                            </a>
+                        </li>
+                        <li class='menu-item@(currentPage == "/Users/ViewNotifications" ? " active" : "")'>
+                            <a asp-controller="Users" asp-action="ViewNotifications" class="menu-link">
+                                <div class="text-truncate" data-i18n="Notifications">Notifications</div>
+                            </a>
+                        </li>
+                        <li class='menu-item@(currentPage == "/Users/ViewConnections" ? " active" : "")'>
+                            <a asp-controller="Users" asp-action="ViewConnections" class="menu-link">
+                                <div class="text-truncate" data-i18n="Connections">Connections</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+
+        <li class='menu-item@(currentPage.StartsWith("/Configurations") ? " active open" : "")'>
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-pencil"></i>
+                <div class="text-truncate" data-i18n="Configurations">Configurations</div>
+            </a>
+            <ul class="menu-sub">
+                <li class='menu-item@(currentPage == "/Configurations/Products" ? " active" : "")'>
+                    <a asp-controller="Configurations" asp-action="List" class="menu-link">
+                        <div class="text-truncate" data-i18n="Products">Products</div>
+                    </a>
+                </li>
+            </ul>
+            <ul class="menu-sub">
+                <li class='menu-item@(currentPage == "/Configurations/Categories" ? " active" : "")'>
+                    <a asp-controller="Configurations" asp-action="Categories" class="menu-link">
+                        <div class="text-truncate" data-i18n="Categories">Categories</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <!-- Settings -->
+    <li class="menu-header small text-uppercase">
+            <span class="menu-header-text" data-i18n="Settings">Settings</span>
+    </li>
+        <li class='menu-item@(currentPage == "/Settings/Settings" ? " active" : "")'>
+            <a asp-controller="Settings" asp-action="Index" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-cog"></i>
+                <div class="text-truncate" data-i18n="Settings">Settings</div>
+      </a>
+    </li>
+        <li class='menu-item@(currentPage == "/Settings/Logs" ? " active" : "")'>
+            <a asp-controller="Settings" asp-action="Logs" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-archive"></i>
+                <div class="text-truncate" data-i18n="Logs">Logs</div>
+      </a>
+    </li>
+  
+    <!-- Misc -->
+  @*   <li class="menu-header small text-uppercase">
+      <span class="menu-header-text" data-i18n="Misc">Misc</span>
+    </li>
+    <li class="menu-item">
+      <a href='@TempData.Peek("support")' target="_blank" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-support"></i>
+        <div class="text-truncate" data-i18n="Support">Support</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href='@TempData.Peek("documentation")' target="_blank" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-file"></i>
+        <div class="text-truncate" data-i18n="Documentation">Documentation</div>
+      </a>
+    </li> *@
+  </ul>
+
+</aside>
+<!-- / Menu -->
