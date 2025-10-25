@@ -559,7 +559,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     try {
-      const resp = await fetch('/Accounts/Add', {
+      const resp = await fetch('/Accounts/AjaxSubmit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

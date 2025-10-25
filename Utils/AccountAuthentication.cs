@@ -1,6 +1,7 @@
 using AspnetCoreMvcFull.Data;
 using AspnetCoreMvcFull.Models;
 using AspnetCoreMvcFull.Models.Logs;
+using AspnetCoreMvcFull.Services;
 using AspnetCoreMvcFull.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

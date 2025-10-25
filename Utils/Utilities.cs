@@ -1,9 +1,11 @@
 using AspnetCoreMvcFull.Models;
+using AspnetCoreMvcFull.Services;
 using Microsoft.VisualBasic;
 using System.Collections;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AspnetCoreMvcFull.Utils
 {
@@ -15,6 +17,11 @@ namespace AspnetCoreMvcFull.Utils
     static readonly string VIKey = "@9A3cQThwdzlkTE9";
     public static readonly string QueriesKey = "@9A3cQTh";
 
+    public static string GetRandomNumber(int length)
+    {
+      // Log::info("getRandomNumber");
+      return WebDataService.GenerateString(length);
+    }
     public static DateTime GetDayJoinedDateTime(DateTime dateTime)
     {
       var formatted = dateTime.ToString("yyyy-MM-dd") + " 00:00:00";

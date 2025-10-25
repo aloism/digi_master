@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AspnetCoreMvcFull.Utils
 {
-  public class PasswordHasher
+  public class PasswordHasherhandler
   {
     private readonly IPasswordHasher<object> _passwordHasher;
 
@@ -10,7 +10,7 @@ namespace AspnetCoreMvcFull.Utils
     /// Initializes a new instance of the PasswordService.
     /// In a real application, the IPasswordHasher would be injected via dependency injection.
     /// </summary>
-    public PasswordHasher(IPasswordHasher<object> passwordHasher)
+    public PasswordHasherhandler(IPasswordHasher<object> passwordHasher)
     {
       _passwordHasher = passwordHasher;
     }

@@ -1,15 +1,17 @@
 using AspnetCoreMvcFull.Controllers;
 using AspnetCoreMvcFull.Data;
+using AspnetCoreMvcFull.Interfaces;
 using AspnetCoreMvcFull.Models;
 using AspnetCoreMvcFull.Models.db;
+using AspnetCoreMvcFull.Utils;
 using System;
 using System.Net.Http;
 using System.Security.Policy;
 using System.Text.Json;
 
-namespace AspnetCoreMvcFull.Utils
+namespace AspnetCoreMvcFull.Services
 {
-  public class SmsService
+  public class SmsService : IAPIService
   {
     private static readonly Random random = new Random();
     private readonly ILogger<HomeController> _logger;
@@ -24,9 +26,9 @@ namespace AspnetCoreMvcFull.Utils
 
     }
 
-    public SmsService()
-    {
-    }
+    //public SmsService()
+    //{
+    //}
 
     public async Task<Dictionary<string, string>> SendSMSNotificationAsync(string msisdn, string message)
     {
@@ -40,7 +42,7 @@ namespace AspnetCoreMvcFull.Utils
 
       var responseDict = new Dictionary<string, string>
     {
-        { "resultStatus", GlobalConstants.OnFailureRes.ToString() },
+        { "resultStatus", GlobalConstants.ON_FAILURE_RES.ToString() },
         { "res_message", "Request Failed" }
     };
 

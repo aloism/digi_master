@@ -20,7 +20,7 @@ namespace AspnetCoreMvcFull.Utils
         {
             new JsonErrorResponse
             {
-                Code = OnFailureRes,
+                Code = ON_FAILURE_RES,
                 Msg = message
             }
         };
@@ -86,10 +86,10 @@ namespace AspnetCoreMvcFull.Utils
     public const string PleaseEnterCorrectDeatails = "Please enter correct details";
 
     //======================================== REQUEST RESPONSES
-    public const int OnSuccessRes = 000;
+    public const int ON_SUCCESS_RES = 000;
     public const int OnSuccessResMain = 2019;
-    public const int OnFailureRes = 400;
-    public const int OnNotFoundRes = 21;
+    public const int ON_FAILURE_RES = 400;
+    public const int ON_NOT_FOUND_RES = 21;
     public const int OnWrongPasswordRes = 22;
     public const int OnPhoneNumberInuseRes = 23;
     public const int OnAccountNotActiveRes = 24;
@@ -99,10 +99,10 @@ namespace AspnetCoreMvcFull.Utils
     public const int OnPaymentAlreadyConfimed = 28;
     public const int OnPaymentNotOk = 29;
     public const int OnDuplicateAcc = 30;
-    public const int OnAccNotAuth = 31;
-    public const int OnTooManyDevices = 32;
+    public const int ON_ACC_NOT_AUTH = 31;
+    public const int ON_TOO_MANY_DEVICES = 32;
     public const int OnNoDevice = 33;
-    public const int OnWrongOtp = 34;
+    public const int ON_WRONG_OTP = 34;
     public const int OnAccReAuth = 35;
     public const int OnFloatNotMatching = 36;
     public const int OnFloatIssues = 37;
@@ -110,6 +110,7 @@ namespace AspnetCoreMvcFull.Utils
     public const int OnInsufficientBalanceReq = 39;
     public const int OnOldCbTrans = 40;
     public const int OnWrongCurrencyTrans = 41;
+    public const int ON_WRONG_PINCODE = 108;
 
     //======================================== GLOBAL STRINGS
     // MESSAGE LEVELS
@@ -157,12 +158,12 @@ namespace AspnetCoreMvcFull.Utils
 
     public const int SELF_REG_ADMIN = 201300;
     public const int REG_ADMIN = 201301;
-    public const int CREATECABIN = 201302;
+    public const int CREATE_BRANCH = 201302;
     public const int CREATETELLER = 201303;
     public const int CreateStaff = 201304;
     public const int FloatCabin = 201305;
     public const int SecurityDiffMobile = 201306;
-    public const int SecurityDv2Fa = 201307;
+    public const int SECURITY_DV_2FA = 201307;
     public const int FloatTransfer = 201308;
     public const int ApproveStaff = 201309;
     public const int BlockStaff = 201310;
@@ -182,9 +183,12 @@ namespace AspnetCoreMvcFull.Utils
     public const int WebJournal = 201324;
     public const int UpdateTeller = 201325;
     public const int CabinExtrasOut = 201326;
-    public const int UpdateAccount = 201327;
-    public const int ActivateReversal = 201328;
-    public const int CREATE_USER = 201329;
+    public const int UPDATE_ACCOUNT = 201327;
+    public const int CREATE_T_ACCOUNT = 201328;
+    public const int UPDATE_T_ACCOUNT = 201329;
+    public const int ActivateReversal = 201330;
+    public const int CREATE_USER = 201331;
+    public const int DEVICE_REG = 201332;
 
     public const string FloatCabinStr = "FLOAT";
     public const string FloatCabinCbIn = "CBIN";
@@ -203,9 +207,9 @@ namespace AspnetCoreMvcFull.Utils
     public const string SellGspecialCbout = "SELL_GSPECIAL_CBOUT";
     public const string AuditRequest = "AUDIT_REQUEST";
 
-    public const string SmsNotifOne = "263787976028";
-    public const string SmsFlnNotifOne = "263787976028";
-    public const string SmsFlnNotif2One = "263787976028";
+    public const string SMS_NOTIF_ONE = "263783211562";
+    public const string SmsFlnNotifOne = "263783211562";
+    public const string SmsFlnNotif2One = "263783211562";
 
   }
 }

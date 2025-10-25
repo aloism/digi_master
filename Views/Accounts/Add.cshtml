@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "Add Business - Set Up";
+    ViewData["Title"] = "Add Account - Set Up";
     var alertMessage = TempData.Peek("Alert") as string;
 }
 
@@ -68,7 +68,7 @@
                             </button>
                         </div>
                     }
-                    <form id="formAuthentication" class="mb-6" asp-action="Add" method="POST">
+                    <form id="formAddAcc" class="mb-6" asp-action="Add" method="POST">
 
                         <div class="mb-6">
                             <label class="form-label" for="country">Account Type</label>

@@ -70,18 +70,40 @@ public class DashboardsController : Controller
   public static string getAccountName()
   {
     //  string userName = Session.GetDataFromSession<string>("fx_key");
-    string userName = MainHelper._httpContext.Session.GetString("fx_key");
-    // string fx_dt = Session.GetDataFromSession<string>("fx_dt");
+    string adminName = MainHelper._httpContext.Session.GetString("fx_key");
+    TimeSpan ts = timeDifference();
+
+    if (ts.TotalMinutes > 10)
+    {
+      adminName = "";
+    }
+    return adminName;
+  }
+
+  public static TimeSpan timeDifference()
+  {
     var fx_dt = MainHelper._httpContext.Session.GetString("fx_dt");
     var dt = AspnetCoreMvcFull.Utils.Utilities.getDTimeFromStrimg(fx_dt);
     var dtNow = DateTime.Now;
     TimeSpan ts = dtNow - dt;
+    return ts;
+  }
+
+    public static int getUserId()
+  {
+    string? adminIdStr = MainHelper._httpContext.Session.GetString("fx_id");
+    int adminId = 0;
+    if (!string.IsNullOrEmpty(adminIdStr))
+    {
+      int.TryParse(adminIdStr, out adminId);
+    }
+    TimeSpan ts = timeDifference();
 
     if (ts.TotalMinutes > 10)
     {
-      userName = "";
+      adminId = 0;
     }
-    return userName;
+    return adminId;
   }
 
   public static void updateSessionAuth(string TkAuth)

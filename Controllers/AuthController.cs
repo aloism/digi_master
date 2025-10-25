@@ -1,6 +1,7 @@
 using AspnetCoreMvcFull.Data;
 using AspnetCoreMvcFull.Models;
 using AspnetCoreMvcFull.Models.db;
+using AspnetCoreMvcFull.Services;
 using AspnetCoreMvcFull.Utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -97,7 +98,7 @@ public class AuthController : Controller
           Log = $"Reg IP: {HttpContext.Connection.RemoteIpAddress}, who: {model.Username}",
           CreatedAt = DateTime.Now
         };
-        _appDbContext.Audit.Add(audit);
+        _appDbContext.Audits.Add(audit);
 
         await _appDbContext.SaveChangesAsync();
 
@@ -135,10 +136,10 @@ public class AuthController : Controller
     else
     {
 
-      var user = _appDbContext.Admin.FirstOrDefault(a => a.Username == model.Username && a.Status == 1);
+    var user = _appDbContext.Admin.FirstOrDefault(a => a.Username == model.Username && a.Status == 1);
 
     var passwordHasher = new PasswordHasher<object>();
-    var passwordService = new PasswordHasher(passwordHasher);
+    var passwordService = new PasswordHasherhandler(passwordHasher);
 
     //string plainTextPassword = "MySecretPassword123";
 
@@ -192,11 +193,12 @@ public class AuthController : Controller
         Log = $"Login IP: {HttpContext.Connection.RemoteIpAddress}, who: {model.Username}",
         CreatedAt = DateTime.Now
       };
-      _appDbContext.Audit.Add(audit);
+      _appDbContext.Audits.Add(audit);
 
       await _appDbContext.SaveChangesAsync();
       string role = AccountAuthentication.getAccountAdminRole(_appDbContext, user.Username);
 
+      HttpContext.Session.SetString("fx_id", user.Id.ToString());
       HttpContext.Session.SetString("fx_key", user.Username);
       //HttpContext.Session.SetString("fx_email_key", user.Email == null ? "" : user.Email.TrimEnd());
       HttpContext.Session.SetString("fx_logged_in", Constants.IS_LOGGED_IN);

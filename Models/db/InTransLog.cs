@@ -1,7 +1,13 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace AspnetCoreMvcFull.Models.db
 {
+  [Table("in_trans_log")]
   public class InTransLog
   {
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public long Id { get; set; }
 
     // 'from' is a reserved keyword in C#, so we rename it and map explicitly if using EF

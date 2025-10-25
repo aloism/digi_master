@@ -20,8 +20,14 @@ namespace AspnetCoreMvcFull.Data
     }
 
     public DbSet<Admin> Admin { get; set; }
+    public DbSet<Accounts> Accounts { get; set; }
+    public DbSet<AccountsHistory> AccountsHistory { get; set; }
     public DbSet<History> History { get; set; }
-    public DbSet<Audit> Audit { get; set; }
+    public DbSet<Audit> Audits { get; set; }
+    public DbSet<Branch> Branches { get; set; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<Cashier> Cashiers { get; set; }
+    public DbSet<Device> Devices { get; set; }
     public DbSet<InTransLog> TransLogs { get; set; }
     public DbSet<AccountBalance> AccountBalances { get; set; }
     public DbSet<InNotification> Notifications { get; set; }

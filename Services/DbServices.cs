@@ -1,9 +1,11 @@
 using AspnetCoreMvcFull.Data;
+using AspnetCoreMvcFull.Models;
 using AspnetCoreMvcFull.Models.db;
+using AspnetCoreMvcFull.Utils;
 using Microsoft.AspNetCore.Identity;
 using System;
 
-namespace AspnetCoreMvcFull.Models
+namespace AspnetCoreMvcFull.Services
 {
   public class DbServices
   {
@@ -18,11 +20,16 @@ namespace AspnetCoreMvcFull.Models
       _context = context;
     }
 
-    public static string hashData(string plainTextPassword)
+    public static PasswordHasher<object> getPasswordHasher()
     {
       var passwordHasher = new PasswordHasher<object>();
-      var passwordService = new Utils.PasswordHasher(passwordHasher);
+      //var passwordService = new Utils.PasswordHasherhandler(passwordHasher);
+      return passwordHasher;
+    }
 
+    public static string hashData(string plainTextPassword)
+    {
+      var passwordHasher = getPasswordHasher();
       //// Hash a password to simulate a password stored in the database.
       string hashedPassword = passwordHasher.HashPassword(null, plainTextPassword);
       return hashedPassword;
@@ -35,7 +42,7 @@ namespace AspnetCoreMvcFull.Models
       {
 
         var passwordHasher = new PasswordHasher<object>();
-        var passwordService = new Utils.PasswordHasher(passwordHasher);
+        var passwordService = new PasswordHasherhandler(passwordHasher);
 
         string plainTextPassword = Utils.Utilities.intCodeRandom(8);// "MySecretPassword123";
 

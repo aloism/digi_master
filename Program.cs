@@ -1,5 +1,8 @@
 using AspnetCoreMvcFull.Data;
+using AspnetCoreMvcFull.Interfaces;
+using AspnetCoreMvcFull.Interfaces.stub;
 using AspnetCoreMvcFull.Models;
+using AspnetCoreMvcFull.Services;
 using AspnetCoreMvcFull.Utils;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -36,7 +39,11 @@ builder.Services.AddSession(options =>
   options.IdleTimeout = TimeSpan.FromSeconds(1440);
   options.Cookie.IsEssential = true;
 });
-builder.Services.AddHttpClient(); // Basic registration
+builder.Services.AddHttpClient(); // Basic registration// Add the services to the container.
+builder.Services.AddScoped<IAuditService, AuditService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IAPIService, SmsService>();
+builder.Services.AddScoped<IGoogleFunctionsService, GoogleFunctionsService>();
 var app = builder.Build();
 
 // Create a service scope to get an AspnetCoreMvcFullContext instance using DI and seed the database.
