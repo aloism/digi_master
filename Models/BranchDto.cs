@@ -5,6 +5,9 @@ namespace AspnetCoreMvcFull.Models
   public class BranchDto
   {
     [Required]
+    [Display(Name = "Busines ID")]
+    public int SelectedBusinessId { get; set; }
+    [Required]
     [Display(Name = "Branch Name")]
     public string Name { get; set; }
     [Required]

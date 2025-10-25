@@ -18,6 +18,10 @@
     }
   </div>
 }
+@if (Convert.ToBoolean(@TempData.Peek("sucess")).ToString() == "True")
+{
+   
+}
 
 @* ! Not required for layout-without-menu *@
 @if (ViewData["navbarHideToggle"] == null)

@@ -5,7 +5,7 @@ using AspnetCoreMvcFull.Services;
 using AspnetCoreMvcFull.Utils;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 
 namespace AspnetCoreMvcFull.Interfaces.stub
@@ -22,6 +22,12 @@ namespace AspnetCoreMvcFull.Interfaces.stub
     public async Task<Admin> GetAdminUserAsync(string username)
     {
       var admin = await _context.Admin.FirstOrDefaultAsync(i => i.Username == username);
+      return admin;
+    }
+
+    public async Task<Admin> GetUserLevelAsync(int id)
+    {
+      var admin = await _context.Admin.FirstOrDefaultAsync(i => i.Id == username);
       return admin;
     }
 
@@ -91,6 +97,7 @@ namespace AspnetCoreMvcFull.Interfaces.stub
           decimal newBalance = 0;
           string reqMessage = "";
           string notificationMessage = "";
+          string accountNumber = Utils.Utilities.intCodeRandom(9);
 
           if (isNewAccount)
           {
@@ -99,6 +106,8 @@ namespace AspnetCoreMvcFull.Interfaces.stub
             // 2a. Create InAccounts entry (cbook_inventory)
             var newAccount = new Accounts
             {
+              AccountNumber = accountNumber,
+              ParentId = model.SelectedBranchId,
               ProductId = productId,
               Name = accountName,
               Amount = model.InvAmount,
@@ -123,105 +132,111 @@ namespace AspnetCoreMvcFull.Interfaces.stub
             prevBalance = 0;
             newBalance = newAccount.Amount;
 
-            reqMessage = "Trading Account was successfully created";
-            notificationMessage = $"Alert- Account, Company Trading Account has been declared, Current Balance: {currencyCode}{newAccount.Amount:N2}";
+            reqMessage = "Branch Account was successfully created";
+            notificationMessage = $"Alert- Account, Company Branch Account has been declared, Current Balance: {currencyCode}{newAccount.Amount:N2}";
           }
           else
           {
-            // --- Update Logic (Existing Account - Top-up) ---
-            prevBalance = inAccount.Amount;
-            newBalance = inAccount.Amount + model.InvAmount;
+            if (model.InvAmount > 0)
+            {
+              // --- Update Logic (Existing Account - Top-up) ---
+              prevBalance = inAccount.Amount;
+              newBalance = inAccount.Amount + model.InvAmount;
 
-            inAccount.Amount = newBalance;
-            await _context.SaveChangesAsync();
+              inAccount.Amount = newBalance;
+              await _context.SaveChangesAsync();
 
-            reqMessage = "Trading Account was successfully created";
-            notificationMessage = $"Alert- Account, Company Trading Control Account has been updated from {currencyCode}{prevBalance:N2}, Current Balance: {currencyCode}{newBalance:N2}";
+              reqMessage = "Branch Account was successfully created";
+              notificationMessage = $"Alert- Account, Branch Control Account has been updated from {currencyCode}{prevBalance:N2}, Current Balance: {currencyCode}{newBalance:N2}";
+
+            }
           }
 
-          // --- Common History and Rates Logging ---
-
-          // 2b/3c. Create InAccountsHistory entry (inaccount_his)
-          var accountHistory = new AccountsHistory
+          if (model.InvAmount > 0)
           {
-            AccountId = inAccount.Id,
-            TransType = productId.ToString(),
-            TellerId = userId.ToString(),
-            Amount = model.InvAmount,
-            PrevBalance = prevBalance,
-            NewBalance = newBalance,
-            MinRate = "0",//model.MinAccRate,
-            MaxRate = "0", // Hardcoded '0' as in PHP
-            Currency = currencyCode,
-            AccountCategory = inAccount.AccountCategory,
-            Description = string.Empty,
-            Ref = string.Empty,
-            MonthAdded = dateParts.MonthAdded,
-            DayAdded = dateParts.DayAdded,
-            RequestIp = userIp,
-            CreatedAt = now,
-            DebitId = 0,
-            CreditId = 1,
-            Type = 3, // Top up
-            Status = 1
-          };
-          _context.AccountsHistory.Add(accountHistory);
+            // --- Common History and Rates Logging ---
 
-          // 4. Create InRatesHistory entry (rates_his)
-          //var ratesHistory = new InRatesHistory
-          //{
-          //  AccountId = inAccount.Id,
-          //  RateType = productId,
-          //  MinAmount = 0,
-          //  MaxAmount = 0,
-          //  MinRate = model.MinAccRate,
-          //  MaxRate = 0, // Hardcoded '0' as in PHP
-          //  Currency = inAccount.Currency,
-          //  MonthAdded = dateParts.MonthAdded,
-          //  DayAdded = dateParts.DayAdded,
-          //  RequestIp = userIp,
-          //  CreatedAt = DateTime.UtcNow,
-          //  Status = 1
-          //};
-          //_context.InRatesHistory.Add(ratesHistory);
-
-          // 5. Update Control Account (Debit the float) and Create AccountsHistory
-          var controlAccount = await _context.Accounts.FirstOrDefaultAsync(i => i.ProductId == productId);
-
-          if (controlAccount != null) // Should not be null due to earlier check, but safe guard it
-          {
-            var invPrevBalance = controlAccount.Amount;
-            var invNewBalance = controlAccount.Amount - model.InvAmount;
-
-            controlAccount.Amount = invNewBalance;
-            await _context.SaveChangesAsync(); // Save the inventory update
-
-            var inventoryHistory = new AccountsHistory
+            // 2b/3c. Create InAccountsHistory entry (inaccount_his)
+            var accountHistory = new AccountsHistory
             {
-              AccountId = controlAccount.Id,
+              AccountId = inAccount.Id,
               TransType = productId.ToString(),
               TellerId = userId.ToString(),
-              Amount = invNewBalance,
-              PrevBalance = invPrevBalance,
+              Amount = model.InvAmount,
+              PrevBalance = prevBalance,
               NewBalance = newBalance,
               MinRate = "0",//model.MinAccRate,
               MaxRate = "0", // Hardcoded '0' as in PHP
               Currency = currencyCode,
-              AccountCategory = controlAccount.AccountCategory,
+              AccountCategory = (int)inAccount.AccountCategory,
               Description = string.Empty,
               Ref = string.Empty,
               MonthAdded = dateParts.MonthAdded,
               DayAdded = dateParts.DayAdded,
               RequestIp = userIp,
               CreatedAt = now,
-              DebitId = 1,
-              CreditId = 0,
-              Type = 0, // Transfer Out
+              DebitId = 0,
+              CreditId = 1,
+              Type = 3, // Top up
               Status = 1
             };
-            _context.AccountsHistory.Add(inventoryHistory);
-          }
+            _context.AccountsHistory.Add(accountHistory);
 
+            // 4. Create InRatesHistory entry (rates_his)
+            //var ratesHistory = new InRatesHistory
+            //{
+            //  AccountId = inAccount.Id,
+            //  RateType = productId,
+            //  MinAmount = 0,
+            //  MaxAmount = 0,
+            //  MinRate = model.MinAccRate,
+            //  MaxRate = 0, // Hardcoded '0' as in PHP
+            //  Currency = inAccount.Currency,
+            //  MonthAdded = dateParts.MonthAdded,
+            //  DayAdded = dateParts.DayAdded,
+            //  RequestIp = userIp,
+            //  CreatedAt = DateTime.UtcNow,
+            //  Status = 1
+            //};
+            //_context.InRatesHistory.Add(ratesHistory);
+
+            // 5. Update Control Account (Debit the float) and Create AccountsHistory
+            var controlAccount = await _context.Accounts.FirstOrDefaultAsync(i => i.ProductId == productId);
+
+            if (controlAccount != null) // Should not be null due to earlier check, but safe guard it
+            {
+              var invPrevBalance = controlAccount.Amount;
+              var invNewBalance = controlAccount.Amount - model.InvAmount;
+
+              controlAccount.Amount = invNewBalance;
+              await _context.SaveChangesAsync(); // Save the inventory update
+
+              var inventoryHistory = new AccountsHistory
+              {
+                AccountId = controlAccount.Id,
+                TransType = productId.ToString(),
+                TellerId = userId.ToString(),
+                Amount = invNewBalance,
+                PrevBalance = invPrevBalance,
+                NewBalance = newBalance,
+                MinRate = "0",//model.MinAccRate,
+                MaxRate = "0", // Hardcoded '0' as in PHP
+                Currency = currencyCode,
+                AccountCategory = (int)controlAccount.AccountCategory,
+                Description = string.Empty,
+                Ref = string.Empty,
+                MonthAdded = dateParts.MonthAdded,
+                DayAdded = dateParts.DayAdded,
+                RequestIp = userIp,
+                CreatedAt = now,
+                DebitId = 1,
+                CreditId = 0,
+                Type = 0, // Transfer Out
+                Status = 1
+              };
+              _context.AccountsHistory.Add(inventoryHistory);
+            }
+          }
           // 6. Create History entry (his)
           var history = new History
           {

@@ -1,3 +1,4 @@
+@model AspnetCoreMvcFull.Models.AddAccountFormModel
 @{
     ViewData["Title"] = "User List - Pages";
 }
@@ -41,9 +42,9 @@
                 <tr>
                     <th></th>
                     <th></th>
-                    <th>User</th>
-                    <th>Role</th>
-                    <th>Plan</th>
+                    <th>Account</th>
+                    <th>Account Number</th>
+                    <th>Balance</th>
                     <th>Billing</th>
                     <th>Status</th>
                     <th>Actions</th>
@@ -61,17 +62,24 @@
             <form class="add-new-account pt-0" id="addNewAccountForm" onsubmit="return false">
 
                 <div class="mb-6">
-                    <label class="form-label" for="country">Account Type</label>
-                    <select id="country" class="select2 form-select">
-                        <option value="">Select</option>
-                        <option value="0">Control Account</option>
-                        <option value="1">Commission Account</option>
-                        <option value="2">General Account</option>
+                    <label class="form-label" for="SelectedBranchId"> Branch </label>
+                    <select asp-items="@ViewBag.BranchesList" name="SelectedBranchId" class="form-control">
+                        <option value="">-- Select Branch --</option>
+                    </select>
+                    <span asp-validation-for="SelectedBranchId" class="text-danger"></span>
+                </div>
+                <div class="mb-6">
+                    <label class="form-label" for="AccountType">Account Type</label>
+                    <select id="AccountType" name="AccountType" class="select2 form-select">
+                        <option value="0">Select</option>
+                        <option value="1">Control Account</option>
+                        <option value="2">Commission Account</option>
+                        <option value="3">General Account</option>
                     </select>
                 </div>
                 <div class="mb-6">
                     <label class="form-label" for="currency">Currency</label>
-                    <select id="currency" class="select2 form-select">
+                    <select id="Currency" name="Currency" class="select2 form-select">
                         <option value="">Select</option>
                         <option value="$">USD</option>
                         <option value="R">Rands</option>

@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AspnetCoreMvcFull.Models.db
 {
+  [Table("audit_logs")]
   public class Audit
   {
     [Key]

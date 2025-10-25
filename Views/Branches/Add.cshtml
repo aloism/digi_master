@@ -80,7 +80,7 @@
                                 <select asp-items="@ViewBag.BusinessesList" name="SelectedBusinessId" class="form-control">
                                     <option value="">-- Select Business --</option>
                                 </select>
-                                <span asp-validation-for="Name" class="text-danger"></span>
+                                <span asp-validation-for="SelectedBusinessId" class="text-danger"></span>
                             </div>
                             <div class="mb-6">
                                 <label class="form-label" for="Name">Name</label>
@@ -101,7 +101,7 @@
                                 <input asp-for="GeoLocation" type="text" class="form-control" id="GeoLocation" placeholder="Enter Geo Location" name="GeoLocation" aria-label="Enter Geo Location" required>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Submit Business</button>
+                            <button type="submit" class="btn btn-primary">Submit Branch</button>
 
                         </form>
                     }else

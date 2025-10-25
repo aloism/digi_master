@@ -9,8 +9,11 @@ namespace AspnetCoreMvcFull.Models
     // The values are integers (0, 1, 2) in the HTML, so int is appropriate.
     [Required]
     [Display(Name = "Account Type")]
-    public int AccountType { get; set; }
+    public int AccountType { get; set; } 
 
+    [Required]
+    [Display(Name = "Branch ID")]
+    public int SelectedBranchId { get; set; }
     // The select element has an ID "currency" and its values are strings ("$", "R", "ZWG").
     [Required]
     [Display(Name = "Currency")]
@@ -33,7 +36,7 @@ namespace AspnetCoreMvcFull.Models
     [Display(Name = "Description")] // Display name corrects the label for the user
     public string Descriptipon { get; set; }
     [Range(0.00, double.MaxValue, ErrorMessage = "The top up amount must be a positive number.")]
-    public decimal InvAmount { get; set; }
+    public decimal InvAmount { get; set; } = 0.00M;
 
     // --- Optional: Properties for Populating Dropdowns ---
 

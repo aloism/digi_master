@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AspnetCoreMvcFull.Models.db
 {
-  [Table("in_accounts_history")]
+  [Table("accounts_history")]
   public class AccountsHistory
   {
     [Key]

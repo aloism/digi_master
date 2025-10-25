@@ -20,7 +20,7 @@ namespace AspnetCoreMvcFull.Utils
     public static string GetRandomNumber(int length)
     {
       // Log::info("getRandomNumber");
-      return WebDataService.GenerateString(length);
+      return WebDataService.GenerateRandomString(length);
     }
     public static DateTime GetDayJoinedDateTime(DateTime dateTime)
     {

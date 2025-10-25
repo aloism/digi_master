@@ -189,6 +189,7 @@ namespace AspnetCoreMvcFull.Utils
     public const int ActivateReversal = 201330;
     public const int CREATE_USER = 201331;
     public const int DEVICE_REG = 201332;
+    public const int CREATE_CASHIER = 201333;
 
     public const string FloatCabinStr = "FLOAT";
     public const string FloatCabinCbIn = "CBIN";

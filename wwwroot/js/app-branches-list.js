@@ -21,8 +21,10 @@ $(function () {
   // Variable declaration for table
   var dt_user_table = $('.datatables-users'),
     select2 = $('.select2'),
-    userView = '/Accounts/ViewAccount',
+    userView = '/Branches/ViewBranch',
+    approveBranch = '/Branches/ApproveBranch',
     statusObj = {
+      0: { title: 'Pending', class: 'bg-label-warning' },
       1: { title: 'Pending', class: 'bg-label-warning' },
       2: { title: 'Active', class: 'bg-label-success' },
       3: { title: 'Inactive', class: 'bg-label-secondary' }
@@ -43,17 +45,17 @@ $(function () {
       processing: true,
       serverSide: true,
       ajax: {
-        url: '/Accounts/AccsAjaxRequest',
+        url: '/Branches/BranchesAjaxRequest',
         type: 'POST'
       },
       columns: [
         // columns according to JSON
         { data: 'id' },
         { data: 'id' },
-        { data: 'name' },
-        { data: 'accountNumber' },
-        { data: 'amount' },
-        { data: 'currency' },
+        { data: 'user' },
+        { data: 'Business' },
+        { data: 'Town' },
+        //{ data: 'email' },
         { data: 'status' },
         { data: 'action' }
       ],
@@ -86,12 +88,13 @@ $(function () {
           targets: 2,
           responsivePriority: 4,
           render: function (data, type, full, meta) {
-          console.log(meta);
-           console.log(full);
+             console.log(meta);
+            console.log(full);
             var $name = full['name'],
               $email = full['accountNumber'],
               $image = full['avatar'];
-            userView = userView+'?id=' + full['id'];
+            userView = userView + '?id=' + full['id'];
+            approveBranch = approveBranch +"/"+full['id'];
             if ($image) {
               // For Avatar image
               var $output =
@@ -133,9 +136,9 @@ $(function () {
           targets: 3,
           render: function (data, type, full, meta) {
             var $role = 'Owner';
-            var $amount = full['amount'];
+            var $businessName = full['town'];
             var roleBadgeObj = {
-              Owner: '<i class="bx bx-pie-chart-alt text-primary me-2"></i>',
+              Owner: '<i class="bx bx-crown text-primary me-2"></i>',
               Subscriber: '<i class="bx bx-crown text-primary me-2"></i>',
               Author: '<i class="bx bx-edit text-warning me-2"></i>',
               Maintainer: '<i class="bx bx-user text-success me-2"></i>',
@@ -145,7 +148,7 @@ $(function () {
             return (
               "<span class='text-truncate d-flex align-items-center text-heading'>" +
               roleBadgeObj[$role] +
-              $amount +
+              $businessName +
               '</span>'
             );
           }
@@ -154,15 +157,14 @@ $(function () {
           // Plans
           targets: 4,
           render: function (data, type, full, meta) {
-            var $plan = full['currency'];
-            var $amount = full['amount'];
+            var $plan = full['town'];
 
-            return '<span class="text-heading">' + $plan + $amount + '</span>';
+            return '<span class="text-heading">' + $plan + '</span>';
           }
         },
         {
           // User Status
-          targets: 6,
+          targets: 5,
           render: function (data, type, full, meta) {
             var $status = full['status'];
 
@@ -182,6 +184,7 @@ $(function () {
           searchable: false,
           orderable: false,
           render: function (data, type, full, meta) {
+            
             return (
               '<div class="d-flex align-items-center">' +
               '<a href="javascript:;" class="btn btn-icon delete-record"><i class="bx bx-trash bx-md"></i></a>' +
@@ -190,7 +193,12 @@ $(function () {
               '" class="btn btn-icon"><i class="bx bx-show bx-md"></i></a>' +
               '<a href="javascript:;" class="btn btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded bx-md"></i></a>' +
               '<div class="dropdown-menu dropdown-menu-end m-0">' +
-              '<a href="javascript:;" class="dropdown-item">Edit</a>' +
+              '<a id="approveBtn" href="' +
+              approveBranch +
+              '" class="dropdown-item">Approve</a>' +
+              '<a href="' +
+              userView +
+              '" class="dropdown-item">Edit</a>' +
               '<a href="javascript:;" class="dropdown-item">Suspend</a>' +
               '</div>' +
               '</div>'
@@ -211,7 +219,7 @@ $(function () {
       language: {
         sLengthMenu: '_MENU_',
         search: '',
-        searchPlaceholder: 'Search Account',
+        searchPlaceholder: 'Search User',
         paginate: {
           next: '<i class="bx bx-chevron-right bx-18px"></i>',
           previous: '<i class="bx bx-chevron-left bx-18px"></i>'
@@ -360,7 +368,7 @@ $(function () {
           ]
         },
         {
-          text: '<i class="bx bx-plus bx-sm me-0 me-sm-2"></i><span class="d-none d-sm-inline-block">Add New Account</span>',
+          text: '<i class="bx bx-plus bx-sm me-0 me-sm-2"></i><span class="d-none d-sm-inline-block">Add New Branch</span>',
           className: 'add-new btn btn-primary',
           attr: {
             'data-bs-toggle': 'offcanvas',
@@ -374,7 +382,7 @@ $(function () {
           display: $.fn.dataTable.Responsive.display.modal({
             header: function (row) {
               var data = row.data();
-              return 'Details of ' + data['full_name'];
+              return 'Details of ' + data['firstName'];
             }
           }),
           type: 'column',
@@ -403,52 +411,52 @@ $(function () {
       },
       initComplete: function () {
         // Adding role filter once table initialized
-        this.api()
-          .columns(3)
-          .every(function () {
-            var column = this;
-            var select = $(
-              '<select id="UserRole" class="form-select text-capitalize"><option value=""> Select Role </option></select>'
-            )
-              .appendTo('.user_role')
-              .on('change', function () {
-                var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                column.search(val ? '^' + val + '$' : '', true, false).draw();
-              });
+        //this.api()
+        //  .columns(3)
+        //  .every(function () {
+        //    var column = this;
+        //    var select = $(
+        //      '<select id="UserRole" class="form-select text-capitalize"><option value=""> Select Role </option></select>'
+        //    )
+        //      .appendTo('.user_role')
+        //      .on('change', function () {
+        //        var val = $.fn.dataTable.util.escapeRegex($(this).val());
+        //        column.search(val ? '^' + val + '$' : '', true, false).draw();
+        //      });
 
-            column
-              .data()
-              .unique()
-              .sort()
-              .each(function (d, j) {
-                select.append('<option value="' + d + '">' + d + '</option>');
-              });
-          });
+        //    column
+        //      .data()
+        //      .unique()
+        //      .sort()
+        //      .each(function (d, j) {
+        //        select.append('<option value="' + d + '">' + d + '</option>');
+        //      });
+        //  });
         // Adding plan filter once table initialized
-        this.api()
-          .columns(4)
-          .every(function () {
-            var column = this;
-            var select = $(
-              '<select id="UserPlan" class="form-select text-capitalize"><option value=""> Select Plan </option></select>'
-            )
-              .appendTo('.user_plan')
-              .on('change', function () {
-                var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                column.search(val ? '^' + val + '$' : '', true, false).draw();
-              });
+        //this.api()
+        //  .columns(4)
+        //  .every(function () {
+        //    var column = this;
+        //    var select = $(
+        //      '<select id="UserPlan" class="form-select text-capitalize"><option value=""> Select Plan </option></select>'
+        //    )
+        //      .appendTo('.user_plan')
+        //      .on('change', function () {
+        //        var val = $.fn.dataTable.util.escapeRegex($(this).val());
+        //        column.search(val ? '^' + val + '$' : '', true, false).draw();
+        //      });
 
-            column
-              .data()
-              .unique()
-              .sort()
-              .each(function (d, j) {
-                select.append('<option value="' + d + '">' + d + '</option>');
-              });
-          });
+        //    column
+        //      .data()
+        //      .unique()
+        //      .sort()
+        //      .each(function (d, j) {
+        //        select.append('<option value="' + d + '">' + d + '</option>');
+        //      });
+        //  });
         // Adding status filter once table initialized
         this.api()
-          .columns(6)
+          .columns(5)
           .every(function () {
             var column = this;
             var select = $(
@@ -496,7 +504,7 @@ $(function () {
 // Validation & Phone mask
 (function () {
   const phoneMaskList = document.querySelectorAll('.phone-mask'),
-    addNewUserForm = document.getElementById('addNewUserForm');
+    addNewBusinessForm = document.getElementById('addNewBusinessForm');
 
   // Phone Number
   if (phoneMaskList) {
@@ -508,16 +516,16 @@ $(function () {
     });
   }
   // Add New User Form Validation
-  const fv = FormValidation.formValidation(addNewUserForm, {
+  const fv = FormValidation.formValidation(addNewBusinessForm, {
     fields: {
-      userFullname: {
+      BusinessName: {
         validators: {
           notEmpty: {
-            message: 'Please enter fullname '
+            message: 'Please enter Business name '
           }
         }
       },
-      userEmail: {
+      Email: {
         validators: {
           notEmpty: {
             message: 'Please enter your email'
@@ -545,67 +553,3 @@ $(function () {
     }
   });
 })();
-
-document.addEventListener('DOMContentLoaded', function () {
-  const form = document.getElementById('addNewAccountForm');
-  if (!form) return;
-
-  form.addEventListener('submit', async function (e) {
-    e.preventDefault();
-
-    const submitBtn = form.querySelector('.data-submit');
-    if (submitBtn) submitBtn.disabled = true;
-
-    const payload = {
-      AccountType: document.getElementById('country')?.value ?? '',
-      AccountName: document.getElementById('AccountName')?.value.trim() ?? '',
-      Description: document.getElementById('Descriptipon')?.value.trim() ?? ''
-    };
-
-    try {
-      const resp = await fetch('/Accounts/AjaxSubmit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-          // If you use antiforgery, add the token header here.
-        },
-        body: JSON.stringify(payload)
-      });
-
-      if (!resp.ok) {
-        const txt = await resp.text();
-        throw new Error(`Server error: ${resp.status} ${txt}`);
-      }
-
-      const result = await resp.json();
-
-      if (result?.success) {
-        // close the offcanvas (Bootstrap 5)
-        const offcanvasEl = document.getElementById('offcanvasAddUser');
-        if (offcanvasEl) {
-          const bsOff = bootstrap.Offcanvas.getInstance(offcanvasEl) || new bootstrap.Offcanvas(offcanvasEl);
-          bsOff.hide();
-        }
-
-        // reload datatable if created globally as accountsTable
-        try {
-          if (window.accountsTable && typeof window.accountsTable.ajax === 'object' && typeof window.accountsTable.ajax.reload === 'function') {
-            window.accountsTable.ajax.reload();
-          } else {
-            // fallback: refresh page to show new data
-            location.reload();
-          }
-        } catch (ex) {
-          location.reload();
-        }
-      } else {
-        alert(result?.message ?? 'Unable to save account.');
-      }
-    } catch (err) {
-      console.error(err);
-      alert(err.message ?? 'An error occurred while saving.');
-    } finally {
-      if (submitBtn) submitBtn.disabled = false;
-    }
-  });
-});

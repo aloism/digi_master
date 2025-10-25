@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AspnetCoreMvcFull.Models.db
 {
-  [Table("in_accounts")]
+  [Table("accounts")]
   public class Accounts
   {
     [Key]
@@ -12,54 +12,53 @@ namespace AspnetCoreMvcFull.Models.db
     public int Id { get; set; }
 
     [Required]
-    public int ProductId { get; set; }
+    public int? ProductId { get; set; }
 
     public int? ParentId { get; set; }
 
     [Required]
     [Column(TypeName = "varchar(50)")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     [Required]
-    [Column(TypeName = "varchar(50)")]
     public decimal Amount { get; set; }
 
     [Required]
     [DefaultValue(0)]
-    public int AccountType { get; set; }
+    public int? AccountType { get; set; }
 
     [Required]
     [DefaultValue(0)]
-    public int AccountCategory { get; set; }
+    public int? AccountCategory { get; set; }
 
     [Column(TypeName = "varchar(10)")]
-    public string AccountCode { get; set; }
+    public string? AccountCode { get; set; }
+
+    [Column(TypeName = "varchar(20)")]
+    public string? AccountNumber { get; set; }
 
     [Required]
     [Column(TypeName = "varchar(10)")]
     [DefaultValue("USD")]
-    public string Currency { get; set; }
+    public string? Currency { get; set; }
 
     [Required]
     [Column(TypeName = "varchar(30)")]
-    public string MinRate { get; set; }
+    public string? MinRate { get; set; }
 
     [Required]
     [Column(TypeName = "varchar(30)")]
-    public string MaxRate { get; set; }
+    public string? MaxRate { get; set; }
 
-    [Column(TypeName = "varchar(50)")]
-    public string MinFlmAmount { get; set; }
+    public decimal? MinFlmAmount { get; set; }
 
-    [Column(TypeName = "varchar(50)")]
-    public string MaxFlmAmount { get; set; }
+    public decimal? MaxFlmAmount { get; set; }
 
     [Required]
     [DefaultValue(0)]
-    public int IsBlendedRate { get; set; }
+    public int? IsBlendedRate { get; set; }
 
-    [Column(TypeName = "varchar(50)")]
-    public string BlendedRate { get; set; }
+    public decimal? BlendedRate { get; set; }
 
     [Required]
     public DateTime BlendedRDate { get; set; } = new DateTime(2023, 12, 31, 22, 0, 0);
@@ -71,21 +70,21 @@ namespace AspnetCoreMvcFull.Models.db
     public DateTime UpdatedAt { get; set; } = new DateTime(2023, 12, 31, 22, 0, 0);
 
     [Required]
-    public DateTime MonthAdded { get; set; }
+    public DateTime? MonthAdded { get; set; }
 
     [Required]
-    public DateTime DayAdded { get; set; }
+    public DateTime? DayAdded { get; set; }
 
     [Required]
-    public DateTime RateDayAdded { get; set; }
+    public DateTime? RateDayAdded { get; set; }
 
     [Required]
     [Column(TypeName = "text")]
-    public string RequestIp { get; set; }
+    public string? RequestIp { get; set; }
 
     [Required]
     [DefaultValue(0)]
-    public int WasApproved { get; set; }
+    public int? WasApproved { get; set; }
 
     public int? ApprovedBy { get; set; }
 

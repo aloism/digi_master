@@ -9,9 +9,9 @@ namespace AspnetCoreMvcFull.Models.db
 
     public uint Id { get; set; }
 
-    public int CompanyId { get; set; }
+    public int? CompanyId { get; set; }
 
-    public int UserId { get; set; }
+    public int? UserId { get; set; }
 
     public string? FirstName { get; set; }
 
@@ -22,8 +22,10 @@ namespace AspnetCoreMvcFull.Models.db
     public string AgentNumber { get; set; } = string.Empty;
 
     public string Town { get; set; } = string.Empty;
+    public string BusinessName { get; set; } = string.Empty;
 
-    public string CabinId { get; set; } = string.Empty;
+    public int BranchId { get; set; } = 0;
+    //public string CabinId { get; set; } = string.Empty;
 
     public string? Image { get; set; }
 
@@ -38,7 +40,7 @@ namespace AspnetCoreMvcFull.Models.db
 
     public string? Phone { get; set; }
 
-    public int Status { get; set; }
+    public int? Status { get; set; }
 
     public int? ApprovedId { get; set; }
 
@@ -48,31 +50,31 @@ namespace AspnetCoreMvcFull.Models.db
 
     public int IsDeviceVerificationEnabled { get; set; }
 
-    public int WorkStatus { get; set; }
+    public int? WorkStatus { get; set; }
 
-    public int OnlineStatus { get; set; }
+    public int? OnlineStatus { get; set; }
 
     public string? RememberToken { get; set; }
 
-    public int SupervisorAuth { get; set; }
+    public int? SupervisorAuth { get; set; }
 
     public string IpAddress { get; set; } = string.Empty;
 
-    public string? LastLogin { get; set; }
+    public DateTime? LastLogin { get; set; }
 
-    public int IsOnline { get; set; }
+    public int? IsOnline { get; set; }
 
     public DateTime LastSeen { get; set; }
 
     public string? OfficeAddress { get; set; }
 
-    public int Cashbook { get; set; }
+    public int? Cashbook { get; set; }
 
-    public long CashbookNumber { get; set; }
+    public long? CashbookNumber { get; set; }
 
-    public int Expenses { get; set; }
+    public int? Expenses { get; set; }
 
-    public int RequestMoney { get; set; }
+    public int? RequestMoney { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 
@@ -80,25 +82,25 @@ namespace AspnetCoreMvcFull.Models.db
 
     public string VerificationCode { get; set; } = string.Empty;
 
-    public bool EmailVerify { get; set; }
+    public bool? EmailVerify { get; set; } = false
 
     public DateTime EmailTime { get; set; }
 
-    public int BusinessLevel { get; set; }
+    public int? BusinessLevel { get; set; }
 
-    public int Shipping { get; set; }
+    public int? Shipping { get; set; }
 
     public string DeviceId { get; set; } = "0-0";
 
-    public int TwoFaVerified { get; set; }
+    public int? TwoFaVerified { get; set; }
 
-    public DateTime TwFaVrDate { get; set; }
+    public DateTime? TwFaVrDate { get; set; }
 
     public string? AuthToken { get; set; }
 
     public string? DeviceHardwareId { get; set; }
 
-    public int PinRetriesCounter { get; set; }
+    public int? PinRetriesCounter { get; set; }
 
   }
 }

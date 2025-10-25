@@ -90,21 +90,21 @@
         <li class='menu-item@(currentPage.StartsWith("/Tellers") ? " active open" : "")'>
       <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons bx bx-group"></i>
-                <div class="text-truncate" data-i18n="Tellers">Tellers</div>
+                <div class="text-truncate" data-i18n="Cashiers">Cashiers</div>
       </a>
       <ul class="menu-sub">
                 <li class='menu-item@(currentPage == "/Tellers/List" ? " active" : "")'>
-                    <a asp-controller="Tellers" asp-action="List" class="menu-link" target="_blank">
+                    <a asp-controller="Tellers" asp-action="List" class="menu-link" >
                         <div class="text-truncate" data-i18n="List">List</div>
           </a>
         </li>
                 <li class='menu-item@(currentPage == "/Tellers/Add" ? " active" : "")'>
-                    <a asp-controller="Tellers" asp-action="Add" class="menu-link" target="_blank">
+                    <a asp-controller="Tellers" asp-action="Add" class="menu-link">
                         <div class="text-truncate" data-i18n="Add">Add</div>
           </a>
         </li>
                 <li class='menu-item@(currentPage == "/Tellers/CashBooks" ? " active" : "")'>
-                    <a asp-controller="Tellers" asp-action="CashBooks" class="menu-link" target="_blank">
+                    <a asp-controller="Tellers" asp-action="CashBooks" class="menu-link">
                         <div class="text-truncate" data-i18n="CashBooks">CashBooks</div>
           </a>
         </li>

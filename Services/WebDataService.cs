@@ -55,7 +55,7 @@ namespace AspnetCoreMvcFull.Services
         return response;
       }
     
-    public static string GenerateString(int strength = 16)
+    public static string GenerateRandomString(int strength = 16)
     {
       string input = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -71,5 +71,13 @@ namespace AspnetCoreMvcFull.Services
       return result;
     }
 
+    // A simple utility function (Replaces PHP str_random)
+    //private static string GenerateRandomString(int length)
+    //{
+    //  const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    //  var random = new System.Random();
+    //  return new string(System.Linq.Enumerable.Repeat(chars, length)
+    //      .Select(s => s[random.Next(s.Length)]).ToArray());
+    //}
   }
 }

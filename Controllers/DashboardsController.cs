@@ -2,6 +2,7 @@ using AspnetCoreMvcFull.Data;
 using AspnetCoreMvcFull.Models;
 using AspnetCoreMvcFull.Utils;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Diagnostics;
 
 namespace AspnetCoreMvcFull.Controllers;
@@ -48,6 +49,14 @@ public class DashboardsController : Controller
 
     //}
     //ViewData["record"] = record;
+    //this is for testing purpose only
+    HttpContext.Session.SetString("fx_id", "1");
+    HttpContext.Session.SetString("fx_key", "alois123");
+    HttpContext.Session.SetString("fx_logged_in", Constants.IS_LOGGED_IN);
+    HttpContext.Session.SetInt32("sessionRole", 1);
+
+    DashboardsController.updateSessionTimeOut();
+
     return View();
   }
   void saveSSData(string sessionKey, string sessionData)

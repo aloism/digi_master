@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AspnetCoreMvcFull.Models.db
 {
+  [Table("branches")]
   public class Branch
   {
 
@@ -12,88 +13,92 @@ namespace AspnetCoreMvcFull.Models.db
     public int Id { get; set; }
 
     [DefaultValue(0)]
-    public int OwnerId { get; set; }
+    public int? OwnerId { get; set; }
 
     [Required]
-    public int UserId { get; set; }
-
-    [Required]
-    [Column(TypeName = "varchar(100)")]
-    public string Name { get; set; }
+    public int? UserId { get; set; } = 0;
 
     [Required]
     [Column(TypeName = "varchar(100)")]
-    public string PhysicalLocation { get; set; }
+    public string? Name { get; set; }
+
+    [Required]
+    [Column(TypeName = "varchar(100)")]
+    public string? PhysicalLocation { get; set; }
 
     [Required]
     [Column(TypeName = "varchar(50)")]
-    public string AccountNumber { get; set; }
+    public string? AccountNumber { get; set; }
 
     [Column(TypeName = "varchar(100)")]
-    public string Email { get; set; }
+    public string? Email { get; set; }
 
     [Required]
     [Column(TypeName = "varchar(200)")]
-    public string Balance { get; set; }
+    public string? Balance { get; set; }
 
     [Required]
     [Column(TypeName = "varchar(5)")]
     [DefaultValue("$")]
-    public string Currency { get; set; }
+    public string? Currency { get; set; } = "$";
 
     [Required]
     [DefaultValue(0)]
-    public int CompanyId { get; set; }
+    public int? CompanyId { get; set; }  = 0; 
 
     [Required]
     public DateTime CreatedAt { get; set; } = new DateTime(2022, 12, 31, 22, 0, 0);
 
     [Required]
-    public DateTime MonthAdded { get; set; }
+    public DateTime? MonthAdded { get; set; }
 
     [Required]
-    public DateTime DayAdded { get; set; }
+    public DateTime? DayAdded { get; set; }
 
     [Required]
     public DateTime UpdatedAt { get; set; } = new DateTime(2022, 12, 31, 22, 0, 0);
 
     [Required]
     [Column(TypeName = "text")]
-    public string RequestIp { get; set; }
+    public string? RequestIp { get; set; }
 
     [Column(TypeName = "text")]
-    public string Location { get; set; }
+    public string? Location { get; set; }
+
+    [Required]
+    [Column(TypeName = "varchar(50)")]
+    public string? Town { get; set; }
 
     [Required]
     [DefaultValue(0)]
-    public int Status { get; set; }
+    public int? Status { get; set; } = 0; 
 
     [Required]
     [DefaultValue(0)]
-    public int ApprovedId { get; set; }
+    public int? ApprovedId { get; set; }
 
     [DefaultValue(0)]
-    public int MainAccSales { get; set; }
+    public int? MainAccSales { get; set; } = 0;
 
     [Required]
     [Column(TypeName = "bigint")]
     [DefaultValue(0)]
-    public long Trnnr { get; set; }
+    public long? Trnnr { get; set; } = 0;
 
     [Required]
     [Column(TypeName = "varchar(200)")]
     [DefaultValue("0")]
-    public string MaxFloatLvTrigger { get; set; }
+    public string? MaxFloatLvTrigger { get; set; } = "0";
 
     [Required]
     [Column(TypeName = "varchar(200)")]
     [DefaultValue("0")]
-    public string MinFloatLvTrigger { get; set; }
+    public string? MinFloatLvTrigger { get; set; } = "0";
 
     public DateTime? AdminUpdatedAt { get; set; }
 
     [Column(TypeName = "text")]
-    public string AdminUpdateIp { get; set; }
+    public string? AdminUpdateIp { get; set; }
 
   }
 }

@@ -6,6 +6,7 @@ namespace AspnetCoreMvcFull.Interfaces
   public interface IAccountService
   {// Checks if the trading account float inventory is sufficient.
     Task<Admin> GetAdminUserAsync(string username);
+    Task<AdminRoles> GetUserLevelAsync(int id);
     Task<bool> CheckPasswordSignInAsync(string username,string password);
     Task<ServiceResult> CheckInventoryAsync(int productId, decimal amount);
 

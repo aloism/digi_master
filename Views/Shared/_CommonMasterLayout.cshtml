@@ -42,6 +42,10 @@
   <!-- Page Styles -->
   @RenderSection("PageStyles", required: false)
 
+    <link rel="stylesheet" href="~/vendor/libs/toastr/toastr.css" />
+    <link rel="stylesheet" href="~/vendor/libs/animate-css/animate.css">
+
+    <script src="~/vendor/libs/toastr/toastr.js"></script>
   <!-- Include Scripts for customizer, helper, analytics, config -->
   @await Html.PartialAsync("Sections/_ScriptsIncludes" + ViewData["frontVar"])
 </head>
