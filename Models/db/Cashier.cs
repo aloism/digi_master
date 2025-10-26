@@ -12,6 +12,7 @@ namespace AspnetCoreMvcFull.Models.db
     public int? CompanyId { get; set; }
 
     public int? UserId { get; set; }
+    public int? AccountType { get; set; }
 
     public string? FirstName { get; set; }
 
@@ -82,7 +83,7 @@ namespace AspnetCoreMvcFull.Models.db
 
     public string VerificationCode { get; set; } = string.Empty;
 
-    public bool? EmailVerify { get; set; } = false
+    public bool? EmailVerify { get; set; } = false;
 
     public DateTime EmailTime { get; set; }
 

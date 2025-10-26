@@ -25,9 +25,9 @@ namespace AspnetCoreMvcFull.Interfaces.stub
       return admin;
     }
 
-    public async Task<Admin> GetUserLevelAsync(int id)
+    public async Task<AdminRoles> GetUserLevelAsync(int id)
     {
-      var admin = await _context.Admin.FirstOrDefaultAsync(i => i.Id == username);
+      var admin = await _context.AdminRoles.FirstOrDefaultAsync(i => i.Id == id);
       return admin;
     }
 

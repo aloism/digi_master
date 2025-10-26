@@ -20,6 +20,7 @@ namespace AspnetCoreMvcFull.Data
     }
 
     public DbSet<Admin> Admin { get; set; }
+    public DbSet<AdminRoles> AdminRoles { get; set; }
     public DbSet<Accounts> Accounts { get; set; }
     public DbSet<AccountsHistory> AccountsHistory { get; set; }
     public DbSet<History> History { get; set; }

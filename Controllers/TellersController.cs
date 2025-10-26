@@ -93,6 +93,7 @@ namespace AspnetCoreMvcFull.Controllers
         {
           Image = "person.png",
           BranchId=existingBranch.Id,
+          AccountType = request.AccountType,
           FirstName = request.FirstName,
           LastName = request.LastName,
           IdNumber = request.IdNumber,
@@ -124,7 +125,7 @@ namespace AspnetCoreMvcFull.Controllers
 
           var audit = new InAuthAudit
           {
-            UserId = currentUser.AdminId,
+            UserId = (int)currentUser.AdminId,
             Amount = 0,
             Ref = message,
             Main = 1,

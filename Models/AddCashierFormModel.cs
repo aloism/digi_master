@@ -40,5 +40,8 @@ namespace AspnetCoreMvcFull.Models
     [Display(Name = "AgentNumber")]
     public string? AgentNumber { get; set; }
 
+    [Display(Name = "Account Type")]
+    public int? AccountType { get; set; }
+
   }
 }

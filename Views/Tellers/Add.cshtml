@@ -79,6 +79,14 @@
                             </select>
                             <span asp-validation-for="SelectedBranchId" class="text-danger"></span>
                         </div>
+                        <div class="mb-6">
+                            <label class="form-label" for="AccountType">Cashier Type</label>
+                            <select id="AccountType" name="AccountType" class="select2 form-select" required>
+                                <option value="0">Select</option>
+                                <option value="1">Chief Teller</option>
+                                <option value="2">General Teller</option>
+                            </select>
+                        </div>
                           <div class="mb-6">
                             <label class="form-label" for="FirstName">FirstName</label>
                             <input asp-for="FirstName" type="text" class="form-control" id="FirstName" placeholder="Enter Firstname" name="FirstName" aria-label="Enter Firstname" required>
